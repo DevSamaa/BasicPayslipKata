@@ -5,11 +5,12 @@ namespace BasicPayslipKata
 
     class ActualApp
     {
-        public static float grossIncomeCalculator(int incomingUserAnnualSalary)
+       
+        public static decimal grossIncomeCalculator(int incomingUserAnnualSalary)
         {
             //Gross income = annual salary / 12 months
-            float grossIncome = incomingUserAnnualSalary / 12;
-            return grossIncome;
+            decimal grossIncomeAmount = incomingUserAnnualSalary / 12;
+            return grossIncomeAmount;
         }
 
         public static float incomeTaxCalculator(int incomingUserAnnualSalary)
@@ -28,11 +29,35 @@ namespace BasicPayslipKata
                 return taxBracketOneAmount;
 
             }
+            else if (incomingUserAnnualSalary > 37000 && incomingUserAnnualSalary < 87001)
+            {
+                int toBeTaxedAmount = incomingUserAnnualSalary - 37000;
+                float taxBracketTwoAmount = Convert.ToSingle(toBeTaxedAmount * 0.325);
+                float taxBracketTwoPlusPrevious = taxBracketTwoAmount + 3572;
+                return taxBracketTwoPlusPrevious;
+            }
+            else if (incomingUserAnnualSalary > 87000 && incomingUserAnnualSalary < 180001)
+            {
+                int toBeTaxedAmount = incomingUserAnnualSalary - 87000;
+                float taxBracketThreeAmount = Convert.ToSingle(toBeTaxedAmount * 0.37);
+                float taxBracketThreePlusPrevious = taxBracketThreeAmount + 19822;
+                return taxBracketThreePlusPrevious;
+            }
+
             else
             {
-                //this is just to test
-                return 111;
+                int toBeTaxedAmount = incomingUserAnnualSalary - 180000;
+                float taxBracketFourAmount = Convert.ToSingle(toBeTaxedAmount * 0.45);
+                float taxBracketFourPlusPrevious = taxBracketFourAmount + 54232;
+                return taxBracketFourPlusPrevious;
             }
+
+        }
+
+        public static float netIncome(float incomingGrossIncome, float incomingIncomeTax)
+        {
+            float netIncome = incomingGrossIncome - incomingIncomeTax;
+            return netIncome;
         }
 
         public static void payslipGenerator()
@@ -54,15 +79,34 @@ namespace BasicPayslipKata
             Console.WriteLine("Please enter your super rate:");
             int UserSuperRate = int.Parse(Console.ReadLine());
 
+            Console.WriteLine("Please enter your payment start date:");
+            string UserStartDate = Console.ReadLine();
+
+            Console.WriteLine("Please enter your payment end date:");
+            string UserEndDate = Console.ReadLine();
+
 
             Console.WriteLine("Your payslip has been generated:");
             Console.WriteLine($"Name: {UserFirstName} {UserLastName}");
-            Console.WriteLine($"Your Annual Salary is: {UserAnnualSalary} dollars");
-            Console.WriteLine($"Your Super Rate is:{UserSuperRate}");
+            Console.WriteLine($"Pay Period: {UserStartDate} - {UserEndDate}");
+           
 
-            Console.WriteLine($"Your Gross Income is:{grossIncomeCalculator(UserAnnualSalary)} per month.");
+            float grossIncome = grossIncomeCalculator(UserAnnualSalary);
+            double grossIncomeRounded = Math.Round(grossIncome, 0, MidpointRounding.AwayFromZero);
+            Console.WriteLine($"Your Gross Income rounded is: {grossIncomeRounded} per month.");
 
-            Console.WriteLine($"Your Income Tax is:{incomeTaxCalculator(UserAnnualSalary)/12} per month.");
+            float incomeTax = incomeTaxCalculator(UserAnnualSalary)/12;
+            double incomeTaxRounded = Math.Round(incomeTax, 0, MidpointRounding.AwayFromZero);
+            Console.WriteLine($"Your Income Tax rounded is {incomeTaxRounded} per month.");
+
+            double netIncomeRounded = Math.Round(netIncome(grossIncome, incomeTax), 0, MidpointRounding.AwayFromZero);
+            Console.WriteLine($"Your Net Income rounded is {netIncomeRounded} per month.");
+
+            float superAmount = (grossIncome/100) * UserSuperRate;
+            double superAmountRounded = Math.Round(superAmount, 0, MidpointRounding.AwayFromZero);
+            Console.WriteLine($"Your Super is {superAmountRounded} per month.");
+
+            Console.WriteLine("Thank you for using MYOB");
         }
 
 
