@@ -6,7 +6,8 @@ namespace BasicPayslipKata
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            //function goes here
+            ActualApp.payslipGenerator();
         }
     }
 }
