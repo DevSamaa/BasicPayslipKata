@@ -6,16 +6,16 @@ namespace BasicPayslipKata
     class ActualApp
     {
        
-        public static decimal grossIncomeCalculator(int incomingUserAnnualSalary)
+        public static decimal grossIncomeCalculator(decimal incomingUserAnnualSalary)
         {
             //Gross income = annual salary / 12 months
             decimal grossIncomeAmount = incomingUserAnnualSalary / 12;
             return grossIncomeAmount;
         }
 
-        public static float incomeTaxCalculator(int incomingUserAnnualSalary)
+        public static decimal incomeTaxCalculator(decimal incomingUserAnnualSalary)
         {
-            int taxFreeAmount = 18200;
+            decimal taxFreeAmount = 18200;
 
             if (incomingUserAnnualSalary <= 18200)
             {
@@ -23,40 +23,41 @@ namespace BasicPayslipKata
             }
             else if (incomingUserAnnualSalary > 18200 && incomingUserAnnualSalary < 37001)
             {
-                //return 19;
-                int toBeTaxedAmount = incomingUserAnnualSalary - taxFreeAmount;
-                float taxBracketOneAmount = Convert.ToSingle(toBeTaxedAmount * 0.19);
+                decimal toBeTaxedAmount = incomingUserAnnualSalary - taxFreeAmount;
+             
+                decimal taxRate1 = Convert.ToDecimal(0.19);
+                decimal taxBracketOneAmount = toBeTaxedAmount * taxRate1;
                 return taxBracketOneAmount;
 
             }
             else if (incomingUserAnnualSalary > 37000 && incomingUserAnnualSalary < 87001)
             {
-                int toBeTaxedAmount = incomingUserAnnualSalary - 37000;
-                float taxBracketTwoAmount = Convert.ToSingle(toBeTaxedAmount * 0.325);
-                float taxBracketTwoPlusPrevious = taxBracketTwoAmount + 3572;
+                decimal toBeTaxedAmount = incomingUserAnnualSalary - 37000;
+                decimal taxRate2 = Convert.ToDecimal(0.325);
+                decimal taxBracketTwoPlusPrevious = (toBeTaxedAmount *taxRate2) + 3572;
                 return taxBracketTwoPlusPrevious;
             }
             else if (incomingUserAnnualSalary > 87000 && incomingUserAnnualSalary < 180001)
             {
-                int toBeTaxedAmount = incomingUserAnnualSalary - 87000;
-                float taxBracketThreeAmount = Convert.ToSingle(toBeTaxedAmount * 0.37);
-                float taxBracketThreePlusPrevious = taxBracketThreeAmount + 19822;
+                decimal toBeTaxedAmount = incomingUserAnnualSalary - 87000;
+                decimal taxRate3 = Convert.ToDecimal(0.37);
+                decimal taxBracketThreePlusPrevious = (toBeTaxedAmount *taxRate3) + 19822;
                 return taxBracketThreePlusPrevious;
             }
 
             else
             {
-                int toBeTaxedAmount = incomingUserAnnualSalary - 180000;
-                float taxBracketFourAmount = Convert.ToSingle(toBeTaxedAmount * 0.45);
-                float taxBracketFourPlusPrevious = taxBracketFourAmount + 54232;
+                decimal toBeTaxedAmount = incomingUserAnnualSalary - 180000;
+                decimal taxRate4 = Convert.ToDecimal(0.45);
+                decimal taxBracketFourPlusPrevious = (toBeTaxedAmount * taxRate4) + 54232;
                 return taxBracketFourPlusPrevious;
             }
 
         }
 
-        public static float netIncome(float incomingGrossIncome, float incomingIncomeTax)
+        public static decimal netIncome(decimal incomingGrossIncome, decimal incomingIncomeTax)
         {
-            float netIncome = incomingGrossIncome - incomingIncomeTax;
+            decimal netIncome = incomingGrossIncome - incomingIncomeTax;
             return netIncome;
         }
 
@@ -74,10 +75,10 @@ namespace BasicPayslipKata
 
 
             Console.WriteLine("Please enter your annual salary:");
-            int UserAnnualSalary = int.Parse(Console.ReadLine());
+            decimal UserAnnualSalary = Convert.ToDecimal(Console.ReadLine());
 
             Console.WriteLine("Please enter your super rate:");
-            int UserSuperRate = int.Parse(Console.ReadLine());
+            decimal UserSuperRate = Convert.ToDecimal(Console.ReadLine());
 
             Console.WriteLine("Please enter your payment start date:");
             string UserStartDate = Console.ReadLine();
@@ -91,19 +92,19 @@ namespace BasicPayslipKata
             Console.WriteLine($"Pay Period: {UserStartDate} - {UserEndDate}");
            
 
-            float grossIncome = grossIncomeCalculator(UserAnnualSalary);
-            double grossIncomeRounded = Math.Round(grossIncome, 0, MidpointRounding.AwayFromZero);
+            decimal grossIncome = grossIncomeCalculator(UserAnnualSalary);
+            decimal grossIncomeRounded = Math.Round(grossIncome, 0, MidpointRounding.AwayFromZero);
             Console.WriteLine($"Your Gross Income rounded is: {grossIncomeRounded} per month.");
 
-            float incomeTax = incomeTaxCalculator(UserAnnualSalary)/12;
-            double incomeTaxRounded = Math.Round(incomeTax, 0, MidpointRounding.AwayFromZero);
+            decimal incomeTax = incomeTaxCalculator(UserAnnualSalary)/12;
+            decimal incomeTaxRounded = Math.Round(incomeTax, 0, MidpointRounding.AwayFromZero);
             Console.WriteLine($"Your Income Tax rounded is {incomeTaxRounded} per month.");
 
-            double netIncomeRounded = Math.Round(netIncome(grossIncome, incomeTax), 0, MidpointRounding.AwayFromZero);
+            decimal netIncomeRounded = Math.Round(netIncome(grossIncome, incomeTax), 0, MidpointRounding.AwayFromZero);
             Console.WriteLine($"Your Net Income rounded is {netIncomeRounded} per month.");
 
-            float superAmount = (grossIncome/100) * UserSuperRate;
-            double superAmountRounded = Math.Round(superAmount, 0, MidpointRounding.AwayFromZero);
+            decimal superAmount = (grossIncome/100) * UserSuperRate;
+            decimal superAmountRounded = Math.Round(superAmount, 0, MidpointRounding.AwayFromZero);
             Console.WriteLine($"Your Super is {superAmountRounded} per month.");
 
             Console.WriteLine("Thank you for using MYOB");
