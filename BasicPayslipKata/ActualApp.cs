@@ -60,10 +60,36 @@ namespace BasicPayslipKata
             return netIncome;
         }
 
-        //public static decimal dataChecker(userInput)
-        //{
-        //    return 0;
-        //}
+        public static string DateGenerator(string startOrEnd)
+        {
+            string userDate = "";
+            while (userDate == "")
+            {
+                Console.WriteLine($"Please enter your payment {startOrEnd} date:");
+                userDate = Console.ReadLine();
+            }
+            return userDate;
+        }
+
+        public static string NameGenerator(string firstOrLastName)
+        {
+            string UserNameEdited;
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine($"Please input your {firstOrLastName} name:");
+                    string UserName = Console.ReadLine();
+                    UserNameEdited = char.ToUpper(UserName[0]) + UserName.Substring(1);
+                    return UserNameEdited;
+                    //break;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("You need to enter your first name:");
+                }
+            }
+        }
 
         public static void payslipGenerator()
         {
@@ -72,38 +98,40 @@ namespace BasicPayslipKata
             Console.WriteLine("Welcome to the payslip generator!");
 
 
-            string UserFirstNameEdited;
-            while (true)
-            {
-                try
-                {
-                    Console.WriteLine("Please input your first name:");
-                    string UserFirstName = Console.ReadLine();
-                    UserFirstNameEdited = char.ToUpper(UserFirstName[0]) + UserFirstName.Substring(1);
-                    break;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("You need to enter your first name:");
-                }
-            }
+            //string UserFirstNameEdited;
+            //while (true)
+            //{
+            //    try
+            //    {
+            //        Console.WriteLine("Please input your first name:");
+            //        string UserFirstName = Console.ReadLine();
+            //        UserFirstNameEdited = char.ToUpper(UserFirstName[0]) + UserFirstName.Substring(1);
+            //        break;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Console.WriteLine("You need to enter your first name:");
+            //    }
+            //}
+            string UserFirstNameEdited = NameGenerator("first");
 
 
-            string UserLastNameEdited;
-            while (true)
-            {
-                try
-                {
-                    Console.WriteLine("Please input your last name:");
-                    string UserLastName = Console.ReadLine();
-                    UserLastNameEdited = char.ToUpper(UserLastName[0]) + UserLastName.Substring(1);
-                    break;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("You need to enter your last name:");
-                }
-            }
+            //string UserLastNameEdited;
+            //while (true)
+            //{
+            //    try
+            //    {
+            //        Console.WriteLine("Please input your last name:");
+            //        string UserLastName = Console.ReadLine();
+            //        UserLastNameEdited = char.ToUpper(UserLastName[0]) + UserLastName.Substring(1);
+            //        break;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Console.WriteLine("You need to enter your last name:");
+            //    }
+            //}
+            string UserLastNameEdited = NameGenerator("last");
      
 
 
@@ -117,8 +145,6 @@ namespace BasicPayslipKata
                 if (checkIfNumber == true && checkedUserAnnualSalary >=0)
                 {
                     //keep going
-                    Console.WriteLine($"The number is now{checkedUserAnnualSalary}");
-                    Console.WriteLine($"The boolean is: {checkIfNumber}");
                     break;
                 }
                 else
@@ -135,7 +161,12 @@ namespace BasicPayslipKata
                 {
                     Console.WriteLine("Please enter your super rate:");
                     UserSuperRate = Convert.ToDecimal(Console.ReadLine());
-                    break;
+                    if (UserSuperRate >= 0 && UserSuperRate <=50)
+                    {
+                        Console.WriteLine($"UserSuperRate is {UserSuperRate}");
+                        break;
+                    }
+                    
                 }
                 catch (FormatException e)
                 {
@@ -146,17 +177,36 @@ namespace BasicPayslipKata
 
 
 
-            Console.WriteLine("Please enter your payment start date:");
-            string UserStartDate = Console.ReadLine();
+            //Console.WriteLine("Please enter your payment start date:");
+            //string UserStartDate = Console.ReadLine();
+            //*********
+            //string UserStartDate = "";
+            //while (UserStartDate == "")
+            //{
+            //    Console.WriteLine("Please enter your payment start date:");
+            //    UserStartDate = Console.ReadLine();
 
-            Console.WriteLine("Please enter your payment end date:");
-            string UserEndDate = Console.ReadLine();
+            //}
+            string UserStartDate = DateGenerator("start");
+
+
+            //Console.WriteLine("Please enter your payment end date:");
+            //string UserEndDate = Console.ReadLine();
+            //**********
+            //string UserEndDate = "";
+            //while (UserEndDate == "")
+            //{
+            //    Console.WriteLine("Please enter your payment end date:");
+            //    UserEndDate = Console.ReadLine();
+            //}
+            string UserEndDate = DateGenerator("end");
+
 
             Console.WriteLine("\n********************************");
             Console.WriteLine("Your payslip has been generated:");
             Console.WriteLine($"Name: {UserFirstNameEdited} {UserLastNameEdited}");
             Console.WriteLine($"Pay Period: {UserStartDate} - {UserEndDate}");
-           
+
 
             decimal grossIncome = grossIncomeCalculator(checkedUserAnnualSalary);
             decimal grossIncomeRounded = Math.Round(grossIncome, 0, MidpointRounding.AwayFromZero);
