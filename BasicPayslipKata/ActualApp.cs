@@ -60,25 +60,51 @@ namespace BasicPayslipKata
             return netIncome;
         }
 
+        //public static decimal dataChecker(userInput)
+        //{
+        //    return 0;
+        //}
+
         public static void payslipGenerator()
         {
 
 
             Console.WriteLine("Welcome to the payslip generator!");
 
-            Console.WriteLine("Please input your first name:");
-            string UserFirstName = Console.ReadLine();
-            string UserFirstNameEdited = char.ToUpper(UserFirstName[0]) + UserFirstName.Substring(1);
 
-            Console.WriteLine("Please input your last name:");
-            string UserLastName = Console.ReadLine();
-            string UserLastNameEdited = char.ToUpper(UserLastName[0]) + UserLastName.Substring(1);
+            string UserFirstNameEdited;
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine("Please input your first name:");
+                    string UserFirstName = Console.ReadLine();
+                    UserFirstNameEdited = char.ToUpper(UserFirstName[0]) + UserFirstName.Substring(1);
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("You need to enter your first name:");
+                }
+            }
 
 
-            //Console.WriteLine("Please enter your annual salary:");
-            //decimal checkedUserAnnualSalary = 0;
-            //string UserAnnualSalary = Console.ReadLine();
-            //bool checkIfNumber = decimal.TryParse(UserAnnualSalary, out checkedUserAnnualSalary);
+            string UserLastNameEdited;
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine("Please input your last name:");
+                    string UserLastName = Console.ReadLine();
+                    UserLastNameEdited = char.ToUpper(UserLastName[0]) + UserLastName.Substring(1);
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("You need to enter your last name:");
+                }
+            }
+     
 
 
             bool checkIfNumber = false;
@@ -88,12 +114,37 @@ namespace BasicPayslipKata
                 Console.WriteLine("Please enter your annual salary:");
                 string UserAnnualSalary = Console.ReadLine();
                 checkIfNumber = decimal.TryParse(UserAnnualSalary, out checkedUserAnnualSalary);
+                if (checkIfNumber == true && checkedUserAnnualSalary >=0)
+                {
+                    //keep going
+                    Console.WriteLine($"The number is now{checkedUserAnnualSalary}");
+                    Console.WriteLine($"The boolean is: {checkIfNumber}");
+                    break;
+                }
+                else
+                {
+                    checkIfNumber = false;
+                }
             }
 
 
+            decimal UserSuperRate;
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine("Please enter your super rate:");
+                    UserSuperRate = Convert.ToDecimal(Console.ReadLine());
+                    break;
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine("Something went wrong. You need to enter a number between 0 and 50!!!");
+                }
 
-            Console.WriteLine("Please enter your super rate:");
-            decimal UserSuperRate = Convert.ToDecimal(Console.ReadLine());
+            }
+
+
 
             Console.WriteLine("Please enter your payment start date:");
             string UserStartDate = Console.ReadLine();
