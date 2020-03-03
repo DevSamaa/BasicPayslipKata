@@ -24,7 +24,6 @@ namespace BasicPayslipKata
             else if (incomingUserAnnualSalary > 18200 && incomingUserAnnualSalary < 37001)
             {
                 decimal toBeTaxedAmount = incomingUserAnnualSalary - taxFreeAmount;
-             
                 decimal taxRate1 = Convert.ToDecimal(0.19);
                 decimal taxBracketOneAmount = toBeTaxedAmount * taxRate1;
                 return taxBracketOneAmount;
@@ -69,13 +68,29 @@ namespace BasicPayslipKata
 
             Console.WriteLine("Please input your first name:");
             string UserFirstName = Console.ReadLine();
+            string UserFirstNameEdited = char.ToUpper(UserFirstName[0]) + UserFirstName.Substring(1);
 
             Console.WriteLine("Please input your last name:");
             string UserLastName = Console.ReadLine();
+            string UserLastNameEdited = char.ToUpper(UserLastName[0]) + UserLastName.Substring(1);
 
 
-            Console.WriteLine("Please enter your annual salary:");
-            decimal UserAnnualSalary = Convert.ToDecimal(Console.ReadLine());
+            //Console.WriteLine("Please enter your annual salary:");
+            //decimal checkedUserAnnualSalary = 0;
+            //string UserAnnualSalary = Console.ReadLine();
+            //bool checkIfNumber = decimal.TryParse(UserAnnualSalary, out checkedUserAnnualSalary);
+
+
+            bool checkIfNumber = false;
+            decimal checkedUserAnnualSalary = 0;
+            while (checkIfNumber == false)
+            {
+                Console.WriteLine("Please enter your annual salary:");
+                string UserAnnualSalary = Console.ReadLine();
+                checkIfNumber = decimal.TryParse(UserAnnualSalary, out checkedUserAnnualSalary);
+            }
+
+
 
             Console.WriteLine("Please enter your super rate:");
             decimal UserSuperRate = Convert.ToDecimal(Console.ReadLine());
@@ -86,17 +101,17 @@ namespace BasicPayslipKata
             Console.WriteLine("Please enter your payment end date:");
             string UserEndDate = Console.ReadLine();
 
-
+            Console.WriteLine("\n********************************");
             Console.WriteLine("Your payslip has been generated:");
-            Console.WriteLine($"Name: {UserFirstName} {UserLastName}");
+            Console.WriteLine($"Name: {UserFirstNameEdited} {UserLastNameEdited}");
             Console.WriteLine($"Pay Period: {UserStartDate} - {UserEndDate}");
            
 
-            decimal grossIncome = grossIncomeCalculator(UserAnnualSalary);
+            decimal grossIncome = grossIncomeCalculator(checkedUserAnnualSalary);
             decimal grossIncomeRounded = Math.Round(grossIncome, 0, MidpointRounding.AwayFromZero);
             Console.WriteLine($"Your Gross Income rounded is: {grossIncomeRounded} per month.");
 
-            decimal incomeTax = incomeTaxCalculator(UserAnnualSalary)/12;
+            decimal incomeTax = incomeTaxCalculator(checkedUserAnnualSalary) /12;
             decimal incomeTaxRounded = Math.Round(incomeTax, 0, MidpointRounding.AwayFromZero);
             Console.WriteLine($"Your Income Tax rounded is {incomeTaxRounded} per month.");
 
