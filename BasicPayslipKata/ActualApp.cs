@@ -82,7 +82,6 @@ namespace BasicPayslipKata
                     string UserName = Console.ReadLine();
                     UserNameEdited = char.ToUpper(UserName[0]) + UserName.Substring(1);
                     return UserNameEdited;
-                    //break;
                 }
                 catch (Exception ex)
                 {

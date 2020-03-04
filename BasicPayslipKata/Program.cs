@@ -6,7 +6,6 @@ namespace BasicPayslipKata
     {
         static void Main(string[] args)
         {
-            //function goes here
             ActualApp.payslipGenerator();
         }
     }
