@@ -91,50 +91,8 @@ namespace BasicPayslipKata
             }
         }
 
-        public static void payslipGenerator()
+        public static decimal AnnualSalaryGenerator()
         {
-
-
-            Console.WriteLine("Welcome to the payslip generator!");
-
-
-            //string UserFirstNameEdited;
-            //while (true)
-            //{
-            //    try
-            //    {
-            //        Console.WriteLine("Please input your first name:");
-            //        string UserFirstName = Console.ReadLine();
-            //        UserFirstNameEdited = char.ToUpper(UserFirstName[0]) + UserFirstName.Substring(1);
-            //        break;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Console.WriteLine("You need to enter your first name:");
-            //    }
-            //}
-            string UserFirstNameEdited = NameGenerator("first");
-
-
-            //string UserLastNameEdited;
-            //while (true)
-            //{
-            //    try
-            //    {
-            //        Console.WriteLine("Please input your last name:");
-            //        string UserLastName = Console.ReadLine();
-            //        UserLastNameEdited = char.ToUpper(UserLastName[0]) + UserLastName.Substring(1);
-            //        break;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Console.WriteLine("You need to enter your last name:");
-            //    }
-            //}
-            string UserLastNameEdited = NameGenerator("last");
-     
-
-
             bool checkIfNumber = false;
             decimal checkedUserAnnualSalary = 0;
             while (checkIfNumber == false)
@@ -142,7 +100,7 @@ namespace BasicPayslipKata
                 Console.WriteLine("Please enter your annual salary:");
                 string UserAnnualSalary = Console.ReadLine();
                 checkIfNumber = decimal.TryParse(UserAnnualSalary, out checkedUserAnnualSalary);
-                if (checkIfNumber == true && checkedUserAnnualSalary >=0)
+                if (checkIfNumber == true && checkedUserAnnualSalary >= 0)
                 {
                     //keep going
                     break;
@@ -152,8 +110,12 @@ namespace BasicPayslipKata
                     checkIfNumber = false;
                 }
             }
+            return checkedUserAnnualSalary;
 
+        }
 
+        public static decimal UserSuperRateGenerator()
+        {
             decimal UserSuperRate;
             while (true)
             {
@@ -161,12 +123,11 @@ namespace BasicPayslipKata
                 {
                     Console.WriteLine("Please enter your super rate:");
                     UserSuperRate = Convert.ToDecimal(Console.ReadLine());
-                    if (UserSuperRate >= 0 && UserSuperRate <=50)
+                    if (UserSuperRate >= 0 && UserSuperRate <= 50)
                     {
-                        Console.WriteLine($"UserSuperRate is {UserSuperRate}");
                         break;
                     }
-                    
+
                 }
                 catch (FormatException e)
                 {
@@ -174,31 +135,23 @@ namespace BasicPayslipKata
                 }
 
             }
+            return UserSuperRate;
+        }
 
+        public static void payslipGenerator()
+        {
+            Console.WriteLine("Welcome to the payslip generator!");
 
+            string UserFirstNameEdited = NameGenerator("first");
 
-            //Console.WriteLine("Please enter your payment start date:");
-            //string UserStartDate = Console.ReadLine();
-            //*********
-            //string UserStartDate = "";
-            //while (UserStartDate == "")
-            //{
-            //    Console.WriteLine("Please enter your payment start date:");
-            //    UserStartDate = Console.ReadLine();
+            string UserLastNameEdited = NameGenerator("last");
 
-            //}
+            decimal checkedUserAnnualSalary = AnnualSalaryGenerator();
+
+            decimal UserSuperRate = UserSuperRateGenerator();
+
             string UserStartDate = DateGenerator("start");
 
-
-            //Console.WriteLine("Please enter your payment end date:");
-            //string UserEndDate = Console.ReadLine();
-            //**********
-            //string UserEndDate = "";
-            //while (UserEndDate == "")
-            //{
-            //    Console.WriteLine("Please enter your payment end date:");
-            //    UserEndDate = Console.ReadLine();
-            //}
             string UserEndDate = DateGenerator("end");
 
 
